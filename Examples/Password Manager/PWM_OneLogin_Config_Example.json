@@ -1,0 +1,17 @@
+{
+    "ClientID" : "MyClientID",
+    "ClientSecret" : "MyClientSecret",
+    "Region" : "US",
+    "ModulePath" : "",
+    "MagicLinkFactors" : [
+        "Email with Magic Link",
+        "Magic Link Email"
+    ],
+    "IgnoredRegistrationFactors" : [
+        "Personal Email",
+        "Personal SMS"
+    ],
+    "AutoVerifyFactors" : [
+        "Corporate Email"
+    ]
+}
