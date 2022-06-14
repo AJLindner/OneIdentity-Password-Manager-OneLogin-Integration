@@ -1,8 +1,8 @@
 # Introduction 
-This repo contains the tools needed to integrate [One Identity Password Manager](https://www.oneidentity.com/products/password-manager/) with [OneLogin By One Identity](https://www.onelogin.com/) using the OneLogin v2 API.
+This repo contains the tools needed to integrate [One Identity Password Manager](https://www.oneidentity.com/products/password-manager/) with [OneLogin By One Identity](https://www.onelogin.com/) using the OneLogin API 2 (v5).
 
 # Description
-The "OneLoginByOneIdentity" Powershell Module included in this repo is a stripped-down and limited fork of the larger, in progress, "OneLoginByOneIdentity" powershell module, which includes wrapper functions around the OneLogin v2 API Endpoint. This version of the module only includes the classes and functions that are in-scope and necessary for integration with Password Manager to manage users and security factors, and provide multi-factor authentication.
+The "OneLoginByOneIdentity" Powershell Module included in this repo is a stripped-down and limited fork of the larger, in progress, "OneLoginByOneIdentity" powershell module, which includes wrapper functions around the OneLogin API 2 (v5) Endpoint. This version of the module only includes the classes and functions that are in-scope and necessary for integration with Password Manager to manage users and security factors, and provide multi-factor authentication.
 
 The "Examples" folder includes specific integration examples with Password Manager. These code samples can be used as starting points to build custom integrations with Password Manager and OneLogin, but should not be considered production-ready, or specified to meet the requirements of your environment.
 
@@ -94,7 +94,7 @@ $OneLoginConfigData = @{
     ModulePath = ""
 
     <#
-    Email MFA can either use an OTP Code or a Magic Link. The OneLogin V2 API can not determine which is which
+    Email MFA can either use an OTP Code or a Magic Link. The OneLogin 2 (v5) API can not determine which is which
     So, if you have any email factors that use a Magic Link, please include the DISPLAY NAMES here
     You can check this in the OneLogin Admin Portal by going to Security -> Authentication Factors
     Then, check any "OneLogin Email" Factors. If the "MFA Type" is "Magic Link", include the "Display Name" a.k.a. "User Description"
@@ -104,7 +104,7 @@ $OneLoginConfigData = @{
     MagicLinkFactors = @()
 
     <#
-    The OneLogin API allows registering new Authentication Factors ("devices"), but is has limitations in the current version V2
+    The OneLogin API allows registering new Authentication Factors ("devices"), but is has limitations in the current version 2 (v5)
     You can only register OneLogin Protect, Email, SMS, OneLogin Voice, and Authenticator.
     Password Manager will only display those Registration Factors. However, there is one other caveat.
     SMS and Email factors have the OPTION to allow the end user to provide their email or phone number.

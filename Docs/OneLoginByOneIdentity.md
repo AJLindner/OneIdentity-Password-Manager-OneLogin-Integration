@@ -8,7 +8,7 @@ Locale: en-us
 
 # OneLoginByOneIdentity Module
 ## Description
-This Powershell Module is a limited fork of the larger, in-progress OneLoginByOneIdentity module. This slimmed-down version is intended specifically for use with the One Identity Password Manager product. It provides OneLogin API Wrapper functions that are necessary for integrating with OneLogin via v2 of the OneLogin API. This includes the ability to manage Users, manage Security Factors (Devices), and Authenticate against those Security Factors, driven via API instead of RADIUS.'
+This Powershell Module is a limited fork of the larger, in-progress OneLoginByOneIdentity module. This slimmed-down version is intended specifically for use with the One Identity Password Manager product. It provides OneLogin API Wrapper functions that are necessary for integrating with OneLogin via the OneLogin API 2 (v5). This includes the ability to manage Users, manage Security Factors (Devices), and Authenticate against those Security Factors, driven via API instead of RADIUS.'
 
 ## OneLoginByOneIdentity Cmdlets
 ### [Confirm-OneLoginDeviceRegistration](Confirm-OneLoginDeviceRegistration.md)

@@ -34,7 +34,7 @@ Function PreLoad($workflow,$activity) {
         ModulePath = ""
 
         <#
-        Email MFA can either use an OTP Code or a Magic Link. The OneLogin V2 API can not determine which is which
+        Email MFA can either use an OTP Code or a Magic Link. The OneLogin API 2 (v5) can not determine which is which
         So, if you have any email factors that use a Magic Link, please include the DISPLAY NAMES here
         You can check this in the OneLogin Admin Portal by going to Security -> Authentication Factors
         Then, check any "OneLogin Email" Factors. If the "MFA Type" is "Magic Link", include the "Display Name" a.k.a. "User Description"
@@ -44,7 +44,7 @@ Function PreLoad($workflow,$activity) {
         MagicLinkFactors = @()
 
         <#
-        The OneLogin API allows registering new Authentication Factors ("devices"), but is has limitations in the current version V2
+        The OneLogin API allows registering new Authentication Factors ("devices"), but is has limitations in the current version 2 (v5)
         You can only register OneLogin Protect, Email, SMS, OneLogin Voice, and Authenticator.
         Password Manager will only display those Registration Factors. However, there is one other caveat.
         SMS and Email factors have the OPTION to allow the end user to provide their email or phone number.
