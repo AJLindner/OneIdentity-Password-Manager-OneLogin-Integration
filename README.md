@@ -24,7 +24,7 @@ To install manually:
 
 
 # How to Use the Module
-Refer to the [Online Help Documentation]() or the Comment-Based Help. Use `Get-Command -Module OneLoginByOneIdentity` to list all commands. Get help for specific commands via `Get-Help -Name "Command-Name"`.
+Refer to the [Online Help Documentation](https://github.com/AJLindner/OneIdentity-Password-Manager-OneLogin-Integration/blob/master/Docs/OneLoginByOneIdentity.md) or the Comment-Based Help. Use `Get-Command -Module OneLoginByOneIdentity` to list all commands. Get help for specific commands via `Get-Help -Name "Command-Name"`.
 
 Any scripts utilizing this module should first import it, either by name if it is installed in a `PSModulePath` directory, or by filepath to the `.psd1` file if it is not.
 

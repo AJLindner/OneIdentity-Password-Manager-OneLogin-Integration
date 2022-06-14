@@ -1,7 +1,7 @@
 ---
 external help file: OneLoginByOneIdentity-help.xml
 Module Name: OneLoginByOneIdentity
-online version:
+online version: https://github.com/AJLindner/OneIdentity-Password-Manager-OneLogin-Integration/blob/master/Docs/Disconnect-OneLogin.md
 schema: 2.0.0
 ---
 

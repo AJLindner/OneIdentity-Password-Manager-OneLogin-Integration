@@ -1,7 +1,7 @@
 ---
 external help file: OneLoginByOneIdentity-help.xml
 Module Name: OneLoginByOneIdentity
-online version: https://presales-oneidentity.visualstudio.com/Misc/_git/OneLoginPowershell?path=/Docs/Confirm-OneLoginDeviceRegistration.md&_a=preview
+online version: https://github.com/AJLindner/OneIdentity-Password-Manager-OneLogin-Integration/blob/master/Docs/Confirm-OneLoginDeviceRegistration.md
 schema: 2.0.0
 ---
 

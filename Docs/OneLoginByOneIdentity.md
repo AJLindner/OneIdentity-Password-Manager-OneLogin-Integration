@@ -1,14 +1,14 @@
 ---
 Module Name: OneLoginByOneIdentity
 Module Guid: d1557d1e-87c7-48a2-a669-5b5d82c8b676
-Download Help Link:
+Download Help Link: 
 Help Version: 0.0.1
 Locale: en-us
 ---
 
 # OneLoginByOneIdentity Module
 ## Description
-This Powershell Module is intended for use by One Identity Presales to build integrations between our products and OneLogin. It is essentially a wrapper around various endpoints available in OneLogin's REST API, but is being built on top of a custom class-object model for consistency and expandability. The initial scope is to support all the object classes and functions needed to easily authenticate a user via any MFA devices they have registered with OneLogin. Additional functionality not already covered by the class implementation will be added over time, as the need arises. Please refer to the OneLogin API Documentation for additional information.
+This Powershell Module is a limited fork of the larger, in-progress OneLoginByOneIdentity module. This slimmed-down version is intended specifically for use with the One Identity Password Manager product. It provides OneLogin API Wrapper functions that are necessary for integrating with OneLogin via v2 of the OneLogin API. This includes the ability to manage Users, manage Security Factors (Devices), and Authenticate against those Security Factors, driven via API instead of RADIUS.'
 
 ## OneLoginByOneIdentity Cmdlets
 ### [Confirm-OneLoginDeviceRegistration](Confirm-OneLoginDeviceRegistration.md)
@@ -34,9 +34,6 @@ Gets OneLogin Users, either all, by a search/filter, or by ID
 
 ### [Invoke-OneLoginAPI](Invoke-OneLoginAPI.md)
 Helper function that wraps Invoke-RestMethod and Invoke-WebRequest specifically for making REST calls to the OneLogin API.
-
-### [New-OneLoginTemporaryOTP](New-OneLoginTemporaryOTP.md)
-Generates a Temporary OTP for a user
 
 ### [New-OneLoginUser](New-OneLoginUser.md)
 Create a new user in OneLogin
