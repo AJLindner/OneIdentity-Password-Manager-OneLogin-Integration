@@ -15,7 +15,19 @@
 
 Function PreLoad($workflow,$activity) {
 
-    Import-Module QuestOneLogin
+    $ModulePath = $Workflow.OneLogin.ModulePath
+    If (($ModulePath -ne '') -and ($null -ne $ModulePath)) {
+        Try {
+            Test-Path $ModulePath -ErrorAction Stop
+        }
+        Catch {
+            $workflow.ActivityFailure("There was an error initializing the connection to OneLogin. Please contact your administrator.`n`n$_")
+        }
+        Import-Module $ModulePath
+    } Else {
+        Import-Module OneLoginByOneIdentity
+    }
+    
     $Global:Connection = $workflow.OneLogin.Connection
 
     $VerificationMethod = $workflow.OneLogin.Authentication.Device.verification_method

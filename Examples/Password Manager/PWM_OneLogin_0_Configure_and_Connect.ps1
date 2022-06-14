@@ -145,7 +145,7 @@ Function Set-OneLoginConfiguration {
         }
         Import-Module $ModulePath
     } Else {
-        Import-Module QuestOneLogin
+        Import-Module OneLoginByOneIdentity
     }
 
     $workflow | Add-Member -MemberType NoteProperty -Name "OneLogin" -Value @{} -Force
