@@ -12,11 +12,11 @@ Function Connect-OneLogin {
         $ClientSecret,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [OneLogin.Region]
-        $Region
+        [string]
+        $Subdomain
     )
 
-    $Connection = [OneLogin.Connection]::New($ClientID,$ClientSecret,$Region)
+    $Connection = [OneLogin.Connection]::New($ClientID,$ClientSecret,$Subdomain)
 
     $Connection.AccessToken = Get-OneLoginAccessToken -ClientID $ClientID -ClientSecret $ClientSecret -BaseURL $Connection.BaseURL
     $Connection.Headers = @{

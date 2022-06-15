@@ -1,10 +1,13 @@
 # Introduction 
 This repo contains the tools needed to integrate [One Identity Password Manager](https://www.oneidentity.com/products/password-manager/) with [OneLogin By One Identity](https://www.onelogin.com/) using the OneLogin API 2 (v5).
 
+# Disclaimer
+The scripts contained in this repository are not officially supported by Quest Software, One Identity, or OneLogin. These code samples can be used as starting points to build custom integrations with Password Manager and OneLogin, but should not be considered production-ready, or specified to meet the requirements of your environment. If you intend to implement integrations utilizing this code, and want assistance and support, reach out to your One Identity Account Rep to discuss a Professional Services engagement.
+
 # Description
 The "OneLoginByOneIdentity" Powershell Module included in this repo is a stripped-down and limited fork of the larger, in progress, "OneLoginByOneIdentity" powershell module, which includes wrapper functions around the OneLogin API 2 (v5) Endpoint. This version of the module only includes the classes and functions that are in-scope and necessary for integration with Password Manager to manage users and security factors, and provide multi-factor authentication.
 
-The "Examples" folder includes specific integration examples with Password Manager. These code samples can be used as starting points to build custom integrations with Password Manager and OneLogin, but should not be considered production-ready, or specified to meet the requirements of your environment.
+The "Examples" folder includes specific integration examples with Password Manager.
 
 # Module Installation
 

@@ -1,17 +1,12 @@
 namespace OneLogin {
 
-    public enum Region {
-        US,
-        EU
-    }
-
     public class Connection {
 
         private string ClientID;
 
         private string ClientSecret;
 
-        public Region Region {get;set;}
+        public string Subdomain {get;set;}
 
         public string BaseURL {get;set;}
 
@@ -21,11 +16,11 @@ namespace OneLogin {
 
         public APIAccessToken AccessToken {get;set;}
 
-        public Connection (string ClientID, string ClientSecret, Region Region) {
+        public Connection (string ClientID, string ClientSecret, String Subdomain) {
             this.ClientID = ClientID;
             this.ClientSecret = ClientSecret;
-            this.Region = Region;
-            this.BaseURL = "https://api." + Region + ".onelogin.com";
+            this.Subdomain = Subdomain;
+            this.BaseURL = "https://" + Subdomain + ".onelogin.com";
         }
 
     }

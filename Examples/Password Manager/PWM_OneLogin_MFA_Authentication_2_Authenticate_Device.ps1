@@ -13,6 +13,8 @@
 
 #>
 
+
+
 Function PreLoad($workflow,$activity) {
 
     $ModulePath = $Workflow.OneLogin.ModulePath
@@ -30,7 +32,8 @@ Function PreLoad($workflow,$activity) {
     
     $Global:Connection = $workflow.OneLogin.Connection
 
-    $VerificationMethod = $workflow.OneLogin.Authentication.Device.verification_method
+    $Device = $Workflow.OneLogin.ChosenDevice
+    $VerificationMethod = $Device.verification_method
     
     if ($VerificationMethod -eq "both") {
         if ($device.type_display_name -in $workflow.OneLogin.MagicLinkFactors) {
@@ -39,27 +42,55 @@ Function PreLoad($workflow,$activity) {
             $VerificationMethod = "OTP"
         }
     }
-    
+
     $Workflow.OneLogin.VerificationMethod = $VerificationMethod
+       
+    If ($VerificationMethod -eq "OTP") {
+        Try {
+            $Authentication = Send-OneLoginAuthentication -Device $Device
+            $Workflow.OneLogin.Authentication = $Authentication
+        } Catch {
+            $workflow.ActivityFailure("There was an error initializing the Authentication request. $($_)`n`n$_")
+        }
+    }
 
 }
 
 Function PostLoad($workflow,$activity) {
     
-    $Device = $workflow.OneLogin.Authentication.Device
+    $Device = $Workflow.OneLogin.ChosenDevice
 
     $Verification_Controls = [Collections.Generic.List[QPM.Common.ActivityContexts.Controls.ControlInfo]]::new()
 
+    $OTPLabel  = New-Object QPM.Common.ActivityContexts.Controls.LabelInfo
+    $OTPLabel.ID = "OTPLabel"
+    $OTPLabel.Label = "Enter the Confirmation Code from your '$($Device.type_display_name)' Authentication Factor: '$($Device.user_display_name)', and press Continue, or press Back to select a different Authentication Factor."
+
     $OTP = New-Object QPM.Common.ActivityContexts.Controls.TextBoxInfo
     $OTP.ID = "OTP"
-    $OTP.Label = "Enter the OTP Code on your '$($Device.type_display_name)' device: '$($Device.user_display_name)'. Press Next when finished."
+    $OTP.Label = "OTP"
 
     $Prompt  = New-Object QPM.Common.ActivityContexts.Controls.LabelInfo
     $Prompt.ID = "Prompt"
-    $Prompt.Label = "Please follow the prompt on your '$($Device.type_display_name)' device: '$($Device.user_display_name)'. Press Next when finished."
+    $Prompt.Label = "Press Continue to send a Push Notification to your '$($Device.type_display_name)' Authentication Factor: '$($Device.user_display_name)', or press Back to select a different Authentication Factor."
+
+    $Test = New-Object QPM.Common.ActivityContexts.Controls.LabelInfo
+    $Test.ID = "Test"
+    $Test.Label = "Device User Display Name: $($Device.user_display_name) //
+    Device Type: $($Device.type_display_name) //
+    Auth Factor Name: $($Device.auth_factor_name) //
+    Device Verification Method: $($Device.verification_method) //
+    
+    `$Workflow.OneLogin.VerificationMethod : $($Workflow.OneLogin.VerificationMethod) //
+    `$Workflow.OneLogin.Authentication : $($Workflow.OneLogin.Authentication) //
+    <b>Test<b> : $($Workflow.OneLogin.Test) //
+    "
+
+    $Verification_Controls.Add($Test)
 
     switch ($Workflow.OneLogin.VerificationMethod) {
         "OTP" {
+            $Verification_Controls.Add($OTPLabel)
             $Verification_Controls.Add($OTP)
         }
         "Prompt" {
@@ -71,28 +102,29 @@ Function PostLoad($workflow,$activity) {
    
 }
 
-
 Function PreExecuting($workflow,$activity) {
 
     switch ($Workflow.OneLogin.VerificationMethod) {
         "OTP" {
             $Entered_OTP = $activity.runtime.controls["OTP"].Value
             if ($Entered_OTP -eq '' ) {
-                $Workflow.ActivityFailure("Please enter the OTP Code sent to your device.")
+                $Workflow.ActivityFailure("Please enter the OTP Code from your chosen Authentication Factor.")
             }
             else {
                 Try {
                     $Response = Resolve-OneLoginAuthentication -Authentication $workflow.OneLogin.Authentication -OTP $Entered_OTP -ErrorAction Stop
                 } Catch {
-                    $Workflow.ActivityFailure("There was an error verifying this device. Please try again.`n`n$_")
+                    $Workflow.ActivityFailure("There was an unexpected error verifying this Authentication Factor. Please try again.`n`n$_")
                 }
             }
         }
         "Prompt" {
+            $Authentication = Send-OneLoginAuthentication -Device $Workflow.OneLogin.ChosenDevice
+            $Workflow.OneLogin.Authentication = $Authentication
             Try {
                 $Response = Resolve-OneLoginAuthentication -Authentication $workflow.OneLogin.Authentication -ErrorAction Stop
             } Catch {
-                $Workflow.ActivityFailure("There was an error verifying this device. Please try again.`n`n$_")
+                $Workflow.ActivityFailure("There was an unexpected error verifying this Authentication Factor. Please try again.`n`n$_")
             }
         }
     }
@@ -100,7 +132,15 @@ Function PreExecuting($workflow,$activity) {
     If ($Response.Status -eq "accepted") {
         $workflow.ActivitySuccess()
     } Else {
-        $workflow.ActivityFailure("Multifactor Authentication was not completed.")
+        $global.AddFailedAuthAttempt($workflow.UserInfo.Domain, $workflow.UserInfo.Id, [QPM.Common.Enums.AuthCategory]"Internal")
+        switch ($Workflow.OneLogin.VerificationMethod) {
+            "OTP" {
+                $workflow.ActivityFailure("Authentication Failure. Invalid Confirmation Code. A new code has been sent. Please try again, or press Back to select a different Authentication Factor.")
+            }
+            "Prompt" {
+                $workflow.ActivityFailure("Authentication Failure. Verification unsuccessful. Please try again, or press Back to select a different Authentication Factor.")
+            }
+        }
     }
     
 }

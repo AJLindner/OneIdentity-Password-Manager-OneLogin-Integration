@@ -44,7 +44,7 @@ Function PreLoad($workflow,$activity) {
     $ValidDevices = $Devices | Where-Object {$_.auth_factor_name -in [OneLogin.AuthFactor]::verification_methods.keys}
     
     If ($ValidDevices.count -eq 0) {
-        $workflow.ActivityFailure("You do not have any valid OneLogin Protect, Email, SMS, Authenticator, or OneLogin Voice devices registered for MFA in OneLogin. Please contact your administrator.")
+        $workflow.ActivityFailure("You do not have any valid OneLogin Security Factors (OneLogin Protect, Email, SMS, Authenticator, or OneLogin Voice). Please contact your administrator.")
     } Else {
         $Workflow.OneLogin.Devices= $ValidDevices
     }
@@ -62,13 +62,18 @@ Function PostLoad($workflow,$activity) {
         $Devices_Options.Add("$($Device.device_id)", "$($Device.user_display_name) ($($Device.type_display_name))")
     }
 
+    $Devices_Label = New-Object QPM.Common.ActivityContexts.Controls.LabelInfo
+    $Devices_Label.ID = "DevicesLabel"
+    $Devices_Label.Label = "OneLogin Multifactor Authentication"
+
     $Devices_RadioButtons.ID = "Devices"
-    $Devices_RadioButtons.Label = "Select a Device for Multifactor Authentication"
+    $Devices_RadioButtons.Label = "Select an Authentication Factor"
     $Devices_RadioButtons.Text= "Devices"
     $Devices_RadioButtons.Options = $Devices_Options
     $Devices_RadioButtons.Value = $Devices_Options[0].Value
 
     $Devices_Controls.Add($Devices_RadioButtons)
+    $Devices_Controls.Add($Devices_Label)
 
     $Activity.Runtime.Controls = $Devices_Controls
 }
@@ -78,7 +83,6 @@ Function PreExecuting($workflow,$activity) {
 
     $ChosenDevice = $Workflow.OneLogin.Devices | Where-Object device_id -eq $activity.runtime.controls["Devices"].Value
     
-    $Authentication = Send-OneLoginAuthentication -Device $ChosenDevice
-    $Workflow.OneLogin.Authentication = $Authentication
-    
+    $Workflow.OneLogin.ChosenDevice = $ChosenDevice
+   
 }
