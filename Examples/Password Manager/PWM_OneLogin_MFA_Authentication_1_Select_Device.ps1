@@ -21,7 +21,7 @@ Function PreLoad($workflow,$activity) {
             Test-Path $ModulePath -ErrorAction Stop
         }
         Catch {
-            $workflow.ActivityFailure("There was an error initializing the connection to OneLogin. Please contact your administrator.`n`n$_")
+            $workflow.ActivityFailure("There was an error initializing the connection to OneLogin. Please contact your administrator. [$_]")
         }
         Import-Module $ModulePath
     } Else {
@@ -36,7 +36,7 @@ Function PreLoad($workflow,$activity) {
         $User = Get-OneLoginUser -Filter @{email=$AD.mail} -ErrorAction Stop
         $Workflow.OneLogin.User = $User
     } Catch {
-        $workflow.ActivityFailure("Your OneLogin account could not be found. Please contact your administrator.")
+        $workflow.ActivityFailure("Your OneLogin account could not be found. Please contact your administrator.  [$_]")
     }
 
     $Devices = Get-OneLoginDevices -User $Workflow.OneLogin.User
@@ -44,7 +44,7 @@ Function PreLoad($workflow,$activity) {
     $ValidDevices = $Devices | Where-Object {$_.auth_factor_name -in [OneLogin.AuthFactor]::verification_methods.keys}
     
     If ($ValidDevices.count -eq 0) {
-        $workflow.ActivityFailure("You do not have any valid OneLogin Security Factors (OneLogin Protect, Email, SMS, Authenticator, or OneLogin Voice). Please contact your administrator.")
+        $workflow.ActivityFailure("You do not have any valid OneLogin Security Factors (OneLogin Protect, Email, SMS, Authenticator, or OneLogin Voice). Please contact your administrator.  [$_]")
     } Else {
         $Workflow.OneLogin.Devices= $ValidDevices
     }
@@ -72,8 +72,8 @@ Function PostLoad($workflow,$activity) {
     $Devices_RadioButtons.Options = $Devices_Options
     $Devices_RadioButtons.Value = $Devices_Options[0].Value
 
-    $Devices_Controls.Add($Devices_RadioButtons)
     $Devices_Controls.Add($Devices_Label)
+    $Devices_Controls.Add($Devices_RadioButtons)
 
     $Activity.Runtime.Controls = $Devices_Controls
 }

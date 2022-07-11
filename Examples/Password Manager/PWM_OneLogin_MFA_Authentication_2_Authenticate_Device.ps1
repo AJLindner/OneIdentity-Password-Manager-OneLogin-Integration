@@ -23,7 +23,7 @@ Function PreLoad($workflow,$activity) {
             Test-Path $ModulePath -ErrorAction Stop
         }
         Catch {
-            $workflow.ActivityFailure("There was an error initializing the connection to OneLogin. Please contact your administrator.`n`n$_")
+            $workflow.ActivityFailure("There was an error initializing the connection to OneLogin. Please contact your administrator. [$_]")
         }
         Import-Module $ModulePath
     } Else {
@@ -50,7 +50,7 @@ Function PreLoad($workflow,$activity) {
             $Authentication = Send-OneLoginAuthentication -Device $Device
             $Workflow.OneLogin.Authentication = $Authentication
         } Catch {
-            $workflow.ActivityFailure("There was an error initializing the Authentication request. $($_)`n`n$_")
+            $workflow.ActivityFailure("There was an error initializing the Authentication request. [$_]")
         }
     }
 
@@ -73,20 +73,6 @@ Function PostLoad($workflow,$activity) {
     $Prompt  = New-Object QPM.Common.ActivityContexts.Controls.LabelInfo
     $Prompt.ID = "Prompt"
     $Prompt.Label = "Press Continue to send a Push Notification to your '$($Device.type_display_name)' Authentication Factor: '$($Device.user_display_name)', or press Back to select a different Authentication Factor."
-
-    $Test = New-Object QPM.Common.ActivityContexts.Controls.LabelInfo
-    $Test.ID = "Test"
-    $Test.Label = "Device User Display Name: $($Device.user_display_name) //
-    Device Type: $($Device.type_display_name) //
-    Auth Factor Name: $($Device.auth_factor_name) //
-    Device Verification Method: $($Device.verification_method) //
-    
-    `$Workflow.OneLogin.VerificationMethod : $($Workflow.OneLogin.VerificationMethod) //
-    `$Workflow.OneLogin.Authentication : $($Workflow.OneLogin.Authentication) //
-    <b>Test<b> : $($Workflow.OneLogin.Test) //
-    "
-
-    $Verification_Controls.Add($Test)
 
     switch ($Workflow.OneLogin.VerificationMethod) {
         "OTP" {
@@ -114,17 +100,22 @@ Function PreExecuting($workflow,$activity) {
                 Try {
                     $Response = Resolve-OneLoginAuthentication -Authentication $workflow.OneLogin.Authentication -OTP $Entered_OTP -ErrorAction Stop
                 } Catch {
-                    $Workflow.ActivityFailure("There was an unexpected error verifying this Authentication Factor. Please try again.`n`n$_")
+                    $Workflow.ActivityFailure("There was an unexpected error verifying this Authentication Factor. Please try again. [$_]")
                 }
             }
         }
         "Prompt" {
-            $Authentication = Send-OneLoginAuthentication -Device $Workflow.OneLogin.ChosenDevice
-            $Workflow.OneLogin.Authentication = $Authentication
+            Try{
+                $Authentication = Send-OneLoginAuthentication -Device $Workflow.OneLogin.ChosenDevice
+                $Workflow.OneLogin.Authentication = $Authentication
+            } Catch {
+                $workflow.ActivityFailure("There was an error initializing the Authentication request. [$_]")
+            }
+            
             Try {
                 $Response = Resolve-OneLoginAuthentication -Authentication $workflow.OneLogin.Authentication -ErrorAction Stop
             } Catch {
-                $Workflow.ActivityFailure("There was an unexpected error verifying this Authentication Factor. Please try again.`n`n$_")
+                $Workflow.ActivityFailure("There was an unexpected error verifying this Authentication Factor. Please try again. [$_]")
             }
         }
     }
@@ -135,10 +126,10 @@ Function PreExecuting($workflow,$activity) {
         $global.AddFailedAuthAttempt($workflow.UserInfo.Domain, $workflow.UserInfo.Id, [QPM.Common.Enums.AuthCategory]"Internal")
         switch ($Workflow.OneLogin.VerificationMethod) {
             "OTP" {
-                $workflow.ActivityFailure("Authentication Failure. Invalid Confirmation Code. A new code has been sent. Please try again, or press Back to select a different Authentication Factor.")
+                $workflow.ActivityFailure("Authentication Failure. Invalid Confirmation Code. A new code has been sent. Please try again, or press Back to select a different Authentication Factor.  [$_]")
             }
             "Prompt" {
-                $workflow.ActivityFailure("Authentication Failure. Verification unsuccessful. Please try again, or press Back to select a different Authentication Factor.")
+                $workflow.ActivityFailure("Authentication Failure. Verification unsuccessful. Please try again, or press Back to select a different Authentication Factor.  [$_]")
             }
         }
     }
