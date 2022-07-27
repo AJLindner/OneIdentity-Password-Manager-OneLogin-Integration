@@ -5,6 +5,8 @@
     .DESCRIPTION
     This custom action script can be used in Password Manager as part of a sequence to Authenticate a user via MFA in OneLogin.
 
+    In this step, the user is prompted to select the Security Factor to use for authentication.
+
     No Activity UI is needed, this script will automatically generate the UI.
 
     All workflows that integrate with OneLogin should begin with a PWM_OneLogin_0_Configure_and_Connect Action before any other OneLogin actions.

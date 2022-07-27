@@ -26,8 +26,8 @@ Function PreLoad($workflow,$activity) {
         # Your OneLogin ClientSecret for API Connections. It is recommended to use the Powershell SecretsManagement module to securely fetch this.
         ClientSecret= ""
 
-        # The Region of your OneLogin instance, either "US" or "EU"
-        Region = "US"
+        # The Subdomain of your OneLogin instance
+        Subdomain = ""
 
         # Enter the Path to the OneLoginByOneIdentity Powershell Module
         # ONLY NEEDED IF you did NOT install via Install-Module
@@ -93,8 +93,7 @@ Function Set-OneLoginConfiguration {
 
         [Parameter(Mandatory = $false)]
         [String]
-        [ValidateSet("US","EU")]
-        $Region = "US",
+        $Subdomain,
 
         [Parameter(Mandatory = $false)]
         [String[]]
@@ -124,7 +123,7 @@ Function Set-OneLoginConfiguration {
             
             $ClientID = $Config.ClientID
             $ClientSecret = $Config.ClientSecret
-            $Region = $Config.Region
+            $Subdomain = $Config.Subdomain
             $MagicLinkFactors = $Config.MagicLinkFactors
             $IgnoredRegistrationFactors = $Config.IgnoredRegistrationFactors
             $AutoVerifyFactors = $Config.AutoVerifyFactors

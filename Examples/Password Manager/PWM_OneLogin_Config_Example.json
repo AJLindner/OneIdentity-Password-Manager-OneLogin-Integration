@@ -1,7 +1,7 @@
 {
     "ClientID" : "MyClientID",
     "ClientSecret" : "MyClientSecret",
-    "Region" : "US",
+    "Subdomain" : "ajlindner-dev",
     "ModulePath" : "",
     "MagicLinkFactors" : [
         "Email with Magic Link",
