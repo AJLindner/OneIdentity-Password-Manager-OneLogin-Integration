@@ -3,4 +3,3 @@ Set-Location "C:\Scripts\Modules\OneIdentity-Password-Manager-OneLogin-Integrati
 Import-Module ".\OneLoginByOneIdentity\OneLoginByOneIdentity.psd1"
 Update-MarkdownHelpModule -Path .\Docs -RefreshModulePage
 New-ExternalHelp .\Docs -OutputPath .\OneLoginByOneIdentity\en-US\ -Force
-
