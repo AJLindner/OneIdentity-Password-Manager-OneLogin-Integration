@@ -123,7 +123,6 @@ Function Resolve-OneLoginAuthentication {
 
 }
 
-# This endpoint does not seem to work
 Function New-OneLoginTemporaryOTP {
     [CmdletBinding()]
     param(

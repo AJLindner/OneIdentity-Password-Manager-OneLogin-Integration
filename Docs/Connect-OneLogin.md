@@ -13,7 +13,7 @@ Establish a connection to your OneLogin instance to work with the REST API.
 ## SYNTAX
 
 ```
-Connect-OneLogin [-ClientID] <String> [-ClientSecret] <String> [-Region] <Region> [<CommonParameters>]
+Connect-OneLogin [-ClientID] <String> [-ClientSecret] <String> -Subdomain <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,29 +23,29 @@ Connect to a OneLogin instance using your unique ClientID and ClientSecret. By d
 
 ### Example 1
 ```powershell
-PS C:\> Connect-OneLogin -ClientID "XXX" -ClientSecret "YYY" -Region US
+PS C:\> Connect-OneLogin -ClientID "XXX" -ClientSecret "YYY" -Subdomain "test-dev"
 
 Region      : US
-BaseURL     : https://api.US.onelogin.com  
+BaseURL     : https://test-dev.onelogin.com  
 Headers     : {Authorization, Content-Type}
 RateLimit   : OneLogin.APIRateLimit
 AccessToken : OneLogin.AccessToken
 ```
 
-Connects to the OneLogin instance in the US Region with ClientID XXX using ClientSecret YYY
+Connects to the OneLogin instance in the at test-dev.onelogin.com with ClientID XXX using ClientSecret YYY
 
 ### Example 2
 ```powershell
 PS C:\> $OL = @{
 ClientID = Get-Secret -Name OneLoginClientID -Vault AzKv -AsPlainText
 ClientSecret = Get-Secret -Name OneLoginClientSecret -Vault AzKv -AsPlainText
-Region = "US"
+Subdomain = "test-dev"
 }
 
 PS C:\> Connect-OneLogin @OL
 
 Region      : US
-BaseURL     : https://api.US.onelogin.com  
+BaseURL     : https://test-dev.onelogin.com  
 Headers     : {Authorization, Content-Type}
 RateLimit   : OneLogin.APIRateLimit
 AccessToken : OneLogin.AccessToken
@@ -85,17 +85,16 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Region
-The region your OneLogin instance is located in. This is either US or EU.
+### -Subdomain
+The unique subdomain for your OneLogin instance
 
 ```yaml
-Type: Region
+Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: US, EU
 
 Required: True
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -107,8 +106,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 ### System.String
-
-### OneLogin.Region
 
 ## OUTPUTS
 

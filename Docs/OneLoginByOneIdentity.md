@@ -35,6 +35,9 @@ Gets OneLogin Users, either all, by a search/filter, or by ID
 ### [Invoke-OneLoginAPI](Invoke-OneLoginAPI.md)
 Helper function that wraps Invoke-RestMethod and Invoke-WebRequest specifically for making REST calls to the OneLogin API.
 
+### [New-OneLoginTemporaryOTP](New-OneLoginTemporaryOTP.md)
+Generates a Temporary OTP for a user
+
 ### [New-OneLoginUser](New-OneLoginUser.md)
 Create a new user in OneLogin
 

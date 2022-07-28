@@ -213,18 +213,14 @@ verification_method : Both</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-          <maml:name>Region</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>Subdomain</maml:name>
           <maml:description>
-            <maml:para>The region your OneLogin instance is located in. This is either US or EU.</maml:para>
+            <maml:para>The unique subdomain for your OneLogin instance</maml:para>
           </maml:description>
-          <command:parameterValueGroup>
-            <command:parameterValue required="false" command:variableLength="false">US</command:parameterValue>
-            <command:parameterValue required="false" command:variableLength="false">EU</command:parameterValue>
-          </command:parameterValueGroup>
-          <command:parameterValue required="true" variableLength="false">Region</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
-            <maml:name>Region</maml:name>
+            <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -256,14 +252,14 @@ verification_method : Both</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-        <maml:name>Region</maml:name>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <maml:name>Subdomain</maml:name>
         <maml:description>
-          <maml:para>The region your OneLogin instance is located in. This is either US or EU.</maml:para>
+          <maml:para>The unique subdomain for your OneLogin instance</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">Region</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
-          <maml:name>Region</maml:name>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -273,14 +269,6 @@ verification_method : Both</dev:code>
       <command:inputType>
         <dev:type>
           <maml:name>System.String</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:inputType>
-      <command:inputType>
-        <dev:type>
-          <maml:name>OneLogin.Region</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>
@@ -305,15 +293,15 @@ verification_method : Both</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Connect-OneLogin -ClientID "XXX" -ClientSecret "YYY" -Region US
+        <dev:code>PS C:\&gt; Connect-OneLogin -ClientID "XXX" -ClientSecret "YYY" -Subdomain "test-dev"
 
 Region      : US
-BaseURL     : https://api.US.onelogin.com  
+BaseURL     : https://test-dev.onelogin.com  
 Headers     : {Authorization, Content-Type}
 RateLimit   : OneLogin.APIRateLimit
 AccessToken : OneLogin.AccessToken</dev:code>
         <dev:remarks>
-          <maml:para>Connects to the OneLogin instance in the US Region with ClientID XXX using ClientSecret YYY</maml:para>
+          <maml:para>Connects to the OneLogin instance in the at test-dev.onelogin.com with ClientID XXX using ClientSecret YYY</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -321,13 +309,13 @@ AccessToken : OneLogin.AccessToken</dev:code>
         <dev:code>PS C:\&gt; $OL = @{
 ClientID = Get-Secret -Name OneLoginClientID -Vault AzKv -AsPlainText
 ClientSecret = Get-Secret -Name OneLoginClientSecret -Vault AzKv -AsPlainText
-Region = "US"
+Subdomain = "test-dev"
 }
 
 PS C:\&gt; Connect-OneLogin @OL
 
 Region      : US
-BaseURL     : https://api.US.onelogin.com  
+BaseURL     : https://test-dev.onelogin.com  
 Headers     : {Authorization, Content-Type}
 RateLimit   : OneLogin.APIRateLimit
 AccessToken : OneLogin.AccessToken</dev:code>
