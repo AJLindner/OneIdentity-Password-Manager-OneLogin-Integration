@@ -18,19 +18,19 @@ Function PreLoad($workflow,$activity) {
         # Absolute Path to an External Config File. This overwrites all settings defined below if you include it.
         ExternalConfigFilePath = ""
 
-        # Your OneLogin ClientID for API Connections. It is recommended to use the Powershell SecretsManagement module to securely fetch this.
+        # Your OneLogin ClientID for API Connections. It is recommended to use the Powershell SecretManagement module to securely fetch this.
         # Example:
             # ClientID = (Get-Secret OneLoginClientID -Vault PasswordManager -AsPlainText)
         ClientID = ""
 
-        # Your OneLogin ClientSecret for API Connections. It is recommended to use the Powershell SecretsManagement module to securely fetch this.
+        # Your OneLogin ClientSecret for API Connections. It is recommended to use the Powershell SecretManagement module to securely fetch this.
         ClientSecret= ""
 
         # The Subdomain of your OneLogin instance
         Subdomain = ""
 
         # Enter the Path to the OneLoginByOneIdentity Powershell Module
-        # ONLY NEEDED IF you did NOT install via Install-Module
+        # ONLY NEEDED IF you did NOT install via Install-Module, or place in a PSModule path
         ModulePath = ""
 
         <#
@@ -149,7 +149,7 @@ Function Set-OneLoginConfiguration {
 
     $workflow | Add-Member -MemberType NoteProperty -Name "OneLogin" -Value @{} -Force
 
-    $workflow.OneLogin.Connection = Connect-OneLogin -ClientID $ClientID -ClientSecret $ClientSecret -Region $Region -ErrorAction Stop
+    $workflow.OneLogin.Connection = Connect-OneLogin -ClientID $ClientID -ClientSecret $ClientSecret -Subdomain $Subdomain -ErrorAction Stop
 
     $workflow.OneLogin.MagicLinkFactors = $MagicLinkFactors
     $workflow.OneLogin.IgnoredRegistrationFactors = $IgnoredRegistrationFactors
