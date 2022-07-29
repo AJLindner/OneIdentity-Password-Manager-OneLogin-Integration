@@ -17,6 +17,7 @@ The `Examples` folder includes specific integration examples with Password Manag
  - One Identity Password Manager
 
 # TL;DR / Quick Start Guide
+If you just wish to get this up and running in a lab, follow these instructions. Otherwise, read further for a detailed installation & configuration guide.
 1. [Create an API Credential Pair](https://developers.onelogin.com/api-docs/1/getting-started/working-with-api-credentials) in OneLogin with `Manage All` (SuperUser) Permission.
    - Copy your `Client ID` and `Client Secret`
 2. In Github, click the Green `Code` button, and then select "Download Zip".
@@ -38,7 +39,7 @@ The `Examples` folder includes specific integration examples with Password Manag
      - Update `Subdomain = "YourOneLoginSubDomainHere"` with your OneLogin SubDomain. e.g. if your OneLogin Tenant is `mycompany.onelogin.com`, use `mycompany` as the subdomain.
 13. Click `OK` to save the Custom Action.
 14. Click `Save` to save the workflow and return to the home screen.
-15. From any `Management Policy`, select `Import Workflow`.
+15. From your desired `Management Policy`, select `Import Workflow`.
 16. Select `Upload` and navigate to the downloaded repository folder.
 17. Upload the 2 example workflows from the downloaded repository. These are located in `Examples\Password Manager\Exports`
     - Workflow_[Authentication] OneLogin (API).zip
@@ -157,26 +158,25 @@ All configuration items are keys inside the `$OneLoginConfig` hashtable inside t
 
 ```Powershell
 # Enter your OneLogin Configuration Data below, OR, provide a file path to an external Config file
-# An example PWM_OneLogin_Config_Example.json file is included in the repository
+    # An example PWM_OneLogin_Config_Example.json file is included in the repository
 
     $OneLoginConfigData = @{
 
         # Absolute Path to an External Config File. This overwrites all settings defined below if you include it.
         ExternalConfigFilePath = ""
 
-        # Your OneLogin ClientID for API Connections. It is recommended to use the Powershell SecretsManagement module to securely fetch this.
-        # Example:
-            # ClientID = (Get-Secret OneLoginClientID -Vault PasswordManager -AsPlainText)
-        ClientID = ""
+        # Your OneLogin ClientID for API Connections. It is recommended to use the Powershell SecretManagement module to securely fetch this.
+        # Example: ClientID = (Get-Secret OneLoginClientID -Vault PasswordManager -AsPlainText)
+        ClientID = "MyOneLoginClientID"
 
-        # Your OneLogin ClientSecret for API Connections. It is recommended to use the Powershell SecretsManagement module to securely fetch this.
-        ClientSecret= ""
+        # Your OneLogin ClientSecret for API Connections. It is recommended to use the Powershell SecretManagement module to securely fetch this.
+        ClientSecret= "MyOneLoginClientSecret"
 
         # The Subdomain of your OneLogin instance
-        Subdomain = ""
+        Subdomain = "MyOneLoginSubDomain"
 
         # Enter the Path to the OneLoginByOneIdentity Powershell Module
-        # ONLY NEEDED IF you did NOT install via Install-Module
+        # ONLY NEEDED IF you did NOT install via Install-Module, or place in a PSModule path
         ModulePath = ""
 
         <#
@@ -187,7 +187,7 @@ All configuration items are keys inside the `$OneLoginConfig` hashtable inside t
         Example:
             MagicLinkFactors = @("Email with Magic Link","Magic Link Email")
         #>
-        MagicLinkFactors = @()
+        MagicLinkFactors = @("Email Magic Link")
 
         <#
         The OneLogin API allows registering new Authentication Factors ("devices"), but is has limitations in the current version 2 (v5)
@@ -211,6 +211,8 @@ All configuration items are keys inside the `$OneLoginConfig` hashtable inside t
             AutoVerifyFactors = @("Corporate Email","Corporate SMS")
         #>
         AutoVerifyFactors = @()
+        
+    }
 
 ```
 
