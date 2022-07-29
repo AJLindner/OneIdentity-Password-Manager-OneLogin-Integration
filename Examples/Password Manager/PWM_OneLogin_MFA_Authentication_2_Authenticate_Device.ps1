@@ -19,6 +19,9 @@
 
 Function PreLoad($workflow,$activity) {
 
+    # Set Execution Policy for this process to avoid unsigned code errors
+    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+
     $ModulePath = $Workflow.OneLogin.ModulePath
     If (($ModulePath -ne '') -and ($null -ne $ModulePath)) {
         Try {
@@ -91,6 +94,9 @@ Function PostLoad($workflow,$activity) {
 }
 
 Function PreExecuting($workflow,$activity) {
+
+    # Set Execution Policy for this process to avoid unsigned code errors
+    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
 
     switch ($Workflow.OneLogin.VerificationMethod) {
         "OTP" {

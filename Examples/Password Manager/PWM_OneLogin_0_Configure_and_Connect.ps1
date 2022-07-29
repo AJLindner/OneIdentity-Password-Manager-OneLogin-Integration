@@ -19,15 +19,14 @@ Function PreLoad($workflow,$activity) {
         ExternalConfigFilePath = ""
 
         # Your OneLogin ClientID for API Connections. It is recommended to use the Powershell SecretManagement module to securely fetch this.
-        # Example:
-            # ClientID = (Get-Secret OneLoginClientID -Vault PasswordManager -AsPlainText)
-        ClientID = ""
+        # Example: ClientID = (Get-Secret OneLoginClientID -Vault PasswordManager -AsPlainText)
+        ClientID = "MyOneLoginClientID"
 
         # Your OneLogin ClientSecret for API Connections. It is recommended to use the Powershell SecretManagement module to securely fetch this.
-        ClientSecret= ""
+        ClientSecret= "MyOneLoginClientSecret"
 
         # The Subdomain of your OneLogin instance
-        Subdomain = ""
+        Subdomain = "MyOneLoginSubDomain"
 
         # Enter the Path to the OneLoginByOneIdentity Powershell Module
         # ONLY NEEDED IF you did NOT install via Install-Module, or place in a PSModule path
@@ -41,7 +40,7 @@ Function PreLoad($workflow,$activity) {
         Example:
             MagicLinkFactors = @("Email with Magic Link","Magic Link Email")
         #>
-        MagicLinkFactors = @()
+        MagicLinkFactors = @("Email Magic Link")
 
         <#
         The OneLogin API allows registering new Authentication Factors ("devices"), but is has limitations in the current version 2 (v5)
@@ -115,6 +114,9 @@ Function Set-OneLoginConfiguration {
         [String]
         $ExternalConfigFilePath
     )
+
+    # Set Execution Policy for this process to avoid unsigned code errors
+    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
 
     If (($ExternalConfigFilePath -ne '') -and ($ExternalConfigFilePath -ne $null)) {
         Try {

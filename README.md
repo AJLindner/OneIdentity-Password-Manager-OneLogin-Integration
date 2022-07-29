@@ -16,19 +16,83 @@ The `Examples` folder includes specific integration examples with Password Manag
  - A OneLogin Tenant
  - One Identity Password Manager
 
+# TL;DR / Quick Start Guide
+1. [Create an API Credential Pair](https://developers.onelogin.com/api-docs/1/getting-started/working-with-api-credentials) in OneLogin with `Manage All` (SuperUser) Permission.
+   - Copy your `Client ID` and `Client Secret`
+2. In Github, click the Green `Code` button, and then select "Download Zip".
+3. Extract the .zip file on your Password Manager Administration Server.
+4. Copy the `OneLoginByOneIdentity` folder to `C:\Program Files\WindowsPowerShell\Modules`
+5. Log in to the Password Manager Admin Page (/PMAdmin)
+6. Navigate to `General Settings` -> `Extensibility`
+7. Select the Radio Button for `Extensibility On` and click `Save`.
+8. Head back home, and open *any* Password Manager Workflow.
+9. On the left-hand navigation pane, expand `Custom` and select `Import custom activity`
+10. Import the 3 example activities from the downloaded repository. These are located in `Examples\Password Manager\Exports`
+    - Activity_PWM_OneLogin_0_Configure_and_Connect.zip
+    - Activity_PWM_OneLogin_MFA_Authentication_1_Select_Device.zip
+    - Activity_PWM_OneLogin_MFA_Authentication_2_Authenticate_Device.zip
+ 11. On the left-hand Navigation Pane, in the `Custom` section, mouse over the `PWM OneLogin 0 : Configure and Connect` Action and select `Shared Settings`.
+ 12. Edit the Configuration File appropriately. It is recommended to copy the script out to an editor of your choice (like Powershell ISE) to make the changes, then copy the edited script back into Password Manager.
+     - Update `ClientID = "YourOneLoginClientIDHere"` with your OneLogin API Credential Client ID
+     - Update `ClientSecret= "YourOneLoginClientSecretHere"` with your OneLogin API Credential Client Secret
+     - Update `Subdomain = "YourOneLoginSubDomainHere"` with your OneLogin SubDomain. e.g. if your OneLogin Tenant is `mycompany.onelogin.com`, use `mycompany` as the subdomain.
+13. Click `OK` to save the Custom Action.
+14. Click `Save` to save the workflow and return to the home screen.
+15. From any `Management Policy`, select `Import Workflow`.
+16. Select `Upload` and navigate to the downloaded repository folder.
+17. Upload the 2 example workflows from the downloaded repository. These are located in `Examples\Password Manager\Exports`
+    - Workflow_[Authentication] OneLogin (API).zip
+    - Workflow_[Password Reset] With OneLogin (API) Authentication.zip
+18. Navigate to the Password Manager Self Service Page (/PMSelfService)
+19. Select a user that is in the Management Policy where you uploaded the example workflows
+20. Test the example workflows, and make any necessary changes.
+    
+# Execution Policy Considerations
+As a community-supported project, the included `OneLoginByOneIdentity` Powershell Module is *not* signed by a trusted Certificate Authority. This means you will need to bypass any Execution Policy settings that require scripts to be signed.
+
+The Powershell Execution Policy is not a security control, and there are [many ways to bypass it](https://www.netspi.com/blog/technical/network-penetration-testing/15-ways-to-bypass-the-powershell-execution-policy/).
+
+## Bypass Execution Policy Automatically (Default)
+The included integration scripts & custom activity exports will automatically bypass your Execution Policy. Since Password Manager trusts the code it is executing, these scripts can set the Execution Policy for that specific Powershell Session only:
+
+`Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force`
+
+## Let Password Manager Service Account (or other user accounts) Run Any Powershell Script (Unrestricted)
+Instead of bypassing Execution Policy in the individual Password Manager scripts, you can set the Execution Policy for the Password Manager Service Account to UnRestricted, which allows it to run any Powershell Script, regardless of its signature.
+
+This will allow you to remove the line in each script that bypasses the execution policy.
+
+1. Run Powershell on the Password Manager Administration Server as the Password Manager Service Account
+2. `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force`
+3. Repeat for any other user accounts that need to use the module
+
+## Unblock the Module for All Users
+If you want to trust *only this module* for all users, so it can be used outside of the PWM integration, you can [unblock all files in the module folder](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/unblock-file?view=powershell-7.2).
+
+## Allow All Accounts on the Local Machine to Run Any Powershell Script (Unrestricted)
+Alternatively, you can set the Execution Policy to *unrestricted* for individual users, or for the local machine as a whole.
+  1. Run Powershell  on the Password Manager Administration Server as an Administrator
+  2. `Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy Unrestricted -Force`
+
 # Installing the Module
 
 ## 1. Clone the Repo
 Clone this Repo to your machine via `git clone`. Alternatively, download the repo and extract the .zip file.
 
 ## 2. Install the module
-Since this module is not listed in any repositories, you will need to install it manually. If you do not wish to install the module to a module directory on your Password Manager server, you can optionally use the `ModulePath` key in the `PWM_OneLogin_0_Configure_and_Connect` activity and point it to the `.psd1` file of the module directory.
+Since this module is not listed in any repositories, you will need to install it manually. There are 2 options for importing this module in your scripts, including Password Manager.
+
+The recommended method is to install this module to a Powershell Module Directory. This will allow you to reference the module via `Import-Module OneLoginByOneIdentity`, or by directly calling any of the cmdlets inside it.
+
+If you do not wish to install the module to a module directory on your Password Manager server, you can optionally use the `ModulePath` key in the `PWM_OneLogin_0_Configure_and_Connect` activity and point it to the `.psd1` file of the module directory. This means in *any* scenario where you wish to use this module, you will need to import it directly by the filepath.
 
 To install manually:
 
 1. Select a directory included in the `PSModulePath` environment variable. You can list these directories from Powershell with the command `$Env:PSModulePath`
    
-   By default, Windows machines will always have a module path listed here `$Env:ProgramFiles\WindowsPowerShell\Modules`. This is the recommended directory for installing this module.
+   By default, Windows machines will always have a module path listed here `$Env:ProgramFiles\WindowsPowerShell\Modules`. This is the recommended directory for installing this module. This file path is usually:
+
+   `C:\Program Files\WindowsPowerShell\Modules`
 2. Copy the `OneLoginByOneIdentity` folder to that directory.
 3. That's it. Now, test that you can reference the module by importing it with `Import-Module OneLoginByOneIdentity`
 
