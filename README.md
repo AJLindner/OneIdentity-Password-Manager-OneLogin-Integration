@@ -15,6 +15,8 @@ The `Examples` folder includes specific integration examples with Password Manag
  - Windows Powershell 5.1 (this has not been tested on Powershell Core/PwSh 6+)
  - A OneLogin Tenant
  - One Identity Password Manager
+ - TLS 1.2 must be allowed
+   - The OneLogin API requires connections to be encrypted with TLS 1.2. This is automatically enabled when needed for the Powershell sessions, but if any settings are preventing TLS 1.2, the process will fail.
 
 # TL;DR / Quick Start Guide
 If you just wish to get this up and running in a lab, follow these instructions. Otherwise, read further for a detailed installation & configuration guide.
@@ -102,6 +104,9 @@ To install manually:
  - [Create an API Credential Pair](https://developers.onelogin.com/api-docs/1/getting-started/working-with-api-credentials) with appropriate access. All testing was done with the `Manage All` (SuperUser) Permission.
  - Make note of your `Client Secret` and `Client ID`. Do not worry about making API calls to generate an access token, etc. Authentication and all other API calls are already wrapped and handled via the Powershell Module.
  - *(recommended)* Store the `Client Secret` and `Client ID` in a secret store for use with the [Powershell Secret Management Module](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.secretmanagement/?view=ps-modules) to securely include this info in your script.
+ - Prepare your users. By default, this process will search OneLogin for a user whose Email Address matches the "mail" attribute for the AD User. If you are using the Active Directory Connector, this should already be a 1-to-1 match.
+    
+    `$User = Get-OneLoginUser -Filter @{email=$AD.mail} -ErrorAction Stop`
 ## Password Manager
  - [Enable Extensibility](https://support.oneidentity.com/technical-documents/password-manager/5.9.7/administration-guide/64#TOPIC-1766863) from the Admin site. In the Password Manager Admin Web Interface `/PMAdmin`, go to `General Settings` -> `Extensibility` and select the Radio Button for `Extensibility On`. You may toggle `Troubleshooting` on and off here as well if needed to troubleshoot your scripts.
  - *(recommended)* If using the [Powershell Secret Management Module](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.secretmanagement/?view=ps-modules), ensure the Service Account running the Password Manager Service has access to retreive the secrets from the vault.
