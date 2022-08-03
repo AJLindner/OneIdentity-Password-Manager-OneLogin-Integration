@@ -118,6 +118,9 @@ Function Set-OneLoginConfiguration {
     # Set Execution Policy for this process to avoid unsigned code errors
     Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
 
+    # Set the Security Protocol to TLS 1.2
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
     If (($ExternalConfigFilePath -ne '') -and ($ExternalConfigFilePath -ne $null)) {
         Try {
             Test-Path $ExternalConfigFilePath -ErrorAction Stop

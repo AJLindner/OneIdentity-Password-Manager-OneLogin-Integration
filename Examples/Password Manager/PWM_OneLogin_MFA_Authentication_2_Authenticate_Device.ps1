@@ -22,6 +22,9 @@ Function PreLoad($workflow,$activity) {
     # Set Execution Policy for this process to avoid unsigned code errors
     Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
 
+    # Set the Security Protocol to TLS 1.2
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
     $ModulePath = $Workflow.OneLogin.ModulePath
     If (($ModulePath -ne '') -and ($null -ne $ModulePath)) {
         Try {
