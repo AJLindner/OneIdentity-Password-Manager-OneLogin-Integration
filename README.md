@@ -3,6 +3,11 @@
 # Introduction 
 This repo contains the tools needed to integrate [One Identity Password Manager](https://www.oneidentity.com/products/password-manager/) with [OneLogin By One Identity](https://www.onelogin.com/) using the OneLogin API 2 (v5).
 
+Check out the accompanying blog post:
+ - [OneLogin Blog](https://www.onelogin.com/blog/secure-password-resets-with-one-identity-password-manager-onelogin)
+ - [One Identity Blog](https://www.oneidentity.com/community/blogs/b/active-directory-management-and-security/posts/secure-password-resets-password-manager-and-onelogin)
+ - [AJ's Personal Blog](https://blog.ajlindner.info/secure-password-resets-with-one-identity-password-manager-onelogin)
+
 # Support
 One Identity open source projects are supported through [One Identity GitHub issues](https://github.com/OneIdentity/OneIdentity-Password-Manager-OneLogin-Integration/issues) and the [One Identity Community](https://www.oneidentity.com/community/). This includes all scripts, plugins, SDKs, modules, code snippets or other solutions. For assistance with any One Identity GitHub project, please raise a new Issue on the [One Identity GitHub project page](https://github.com/OneIdentity/OneIdentity-Password-Manager-OneLogin-Integration). You may also visit the [One Identity Community](https://www.oneidentity.com/community/) to ask questions. Requests for assistance made through official One Identity Support will be referred back to GitHub and the One Identity Community forums where those requests can benefit all users.
 
