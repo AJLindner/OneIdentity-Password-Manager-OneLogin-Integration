@@ -3,13 +3,18 @@
 # Introduction 
 This repo contains the tools needed to integrate [One Identity Password Manager](https://www.oneidentity.com/products/password-manager/) with [OneLogin By One Identity](https://www.onelogin.com/) using the OneLogin API 2 (v5).
 
-# Disclaimer
+# Support
 One Identity open source projects are supported through [One Identity GitHub issues](https://github.com/OneIdentity/OneIdentity-Password-Manager-OneLogin-Integration/issues) and the [One Identity Community](https://www.oneidentity.com/community/). This includes all scripts, plugins, SDKs, modules, code snippets or other solutions. For assistance with any One Identity GitHub project, please raise a new Issue on the [One Identity GitHub project page](https://github.com/OneIdentity/OneIdentity-Password-Manager-OneLogin-Integration). You may also visit the [One Identity Community](https://www.oneidentity.com/community/) to ask questions. Requests for assistance made through official One Identity Support will be referred back to GitHub and the One Identity Community forums where those requests can benefit all users.
 
 # Description
 The `OneLoginByOneIdentity` Powershell Module included in this repo is a stripped-down and limited version of the larger, in progress, `OneLoginByOneIdentity` powershell module, which intends to wrap the entire OneLogin API 2 (v5). This version of the module only includes the classes and functions that are in-scope and necessary for integration with Password Manager to manage users and security factors, and provide multi-factor authentication.
 
 The `Examples` folder includes specific integration examples with Password Manager that utilize the functions in the included module.
+
+View the blog post here:
+ - [OneLogin Blog]()
+ - [One Identity Blog]()
+ - [AJ's Personal Blog]()
 
 # Requirements
  - Windows Powershell 5.1 (this has not been tested on Powershell Core/PwSh 6+)
@@ -229,3 +234,10 @@ Per the example files, if you wanted a Password Manager Workflow to authenticate
 3. `PWM_OneLogin_MFA_Authentication_2_Authenticate_Device.ps1`
 
 You may import and refer to the sample workflow `[Authentication] OneLogin (API)` for a full example of the authentication flow.
+
+# Special Thanks to Various Contributors
+I want to make absolutely certain to extend thanks to all my friends, coworkers, colleagues, and others who have contributed to this integration in many ways and provided valuable feedback. If you do so yourself, please reach out and I'll be sure to credit you.
+
+## Contributors
+ - [Eric "breaks more things than he fixes" Hibar](https://www.linkedin.com/in/erichibarjr/)
+ - Sean Robinson
