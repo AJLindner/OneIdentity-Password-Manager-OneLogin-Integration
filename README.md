@@ -8,6 +8,10 @@ Check out the accompanying blog post:
  - [One Identity Blog](https://www.oneidentity.com/community/blogs/b/active-directory-management-and-security/posts/secure-password-resets-password-manager-and-onelogin)
  - [AJ's Personal Blog](https://blog.ajlindner.info/secure-password-resets-with-one-identity-password-manager-onelogin)
 
+This repository is mirrored at:
+ - [My Personal GitHub](https://github.com/AJLindner/OneIdentity-Password-Manager-OneLogin-Integration)
+ - [The One Identity Github](https://github.com/OneIdentity/OneIdentity-Password-Manager-OneLogin-Integration)
+
 # Support
 One Identity open source projects are supported through [One Identity GitHub issues](https://github.com/OneIdentity/OneIdentity-Password-Manager-OneLogin-Integration/issues) and the [One Identity Community](https://www.oneidentity.com/community/). This includes all scripts, plugins, SDKs, modules, code snippets or other solutions. For assistance with any One Identity GitHub project, please raise a new Issue on the [One Identity GitHub project page](https://github.com/OneIdentity/OneIdentity-Password-Manager-OneLogin-Integration). You may also visit the [One Identity Community](https://www.oneidentity.com/community/) to ask questions. Requests for assistance made through official One Identity Support will be referred back to GitHub and the One Identity Community forums where those requests can benefit all users.
 
@@ -15,11 +19,6 @@ One Identity open source projects are supported through [One Identity GitHub iss
 The `OneLoginByOneIdentity` Powershell Module included in this repo is a stripped-down and limited version of the larger, in progress, `OneLoginByOneIdentity` powershell module, which intends to wrap the entire OneLogin API 2 (v5). This version of the module only includes the classes and functions that are in-scope and necessary for integration with Password Manager to manage users and security factors, and provide multi-factor authentication.
 
 The `Examples` folder includes specific integration examples with Password Manager that utilize the functions in the included module.
-
-View the blog post here:
- - [OneLogin Blog]()
- - [One Identity Blog]()
- - [AJ's Personal Blog]()
 
 # Requirements
  - Windows Powershell 5.1 (this has not been tested on Powershell Core/PwSh 6+)
@@ -244,5 +243,6 @@ You may import and refer to the sample workflow `[Authentication] OneLogin (API)
 I want to make absolutely certain to extend thanks to all my friends, coworkers, colleagues, and others who have contributed to this integration in many ways and provided valuable feedback. If you do so yourself, please reach out and I'll be sure to credit you.
 
 ## Contributors
+ - [AJ "the mastermind" Lindner (that's me)](https://www.linkedin.com/in/ajlindner/)
  - [Eric "breaks more things than he fixes" Hibar](https://www.linkedin.com/in/erichibarjr/)
  - Sean Robinson
