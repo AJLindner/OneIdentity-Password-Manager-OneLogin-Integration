@@ -9,7 +9,7 @@ Check out the accompanying blog post:
  - [AJ's Personal Blog](https://blog.ajlindner.info/secure-password-resets-with-one-identity-password-manager-onelogin)
 
 This repository is mirrored at:
- - [My Personal GitHub](https://github.com/AJLindner/OneIdentity-Password-Manager-OneLogin-Integration)
+ - [AJ Lindner's GitHub](https://github.com/AJLindner/OneIdentity-Password-Manager-OneLogin-Integration)
  - [The One Identity Github](https://github.com/OneIdentity/OneIdentity-Password-Manager-OneLogin-Integration)
 
 # Support
