@@ -246,3 +246,4 @@ I want to make absolutely certain to extend thanks to all my friends, coworkers,
  - [AJ "the mastermind" Lindner (that's me)](https://www.linkedin.com/in/ajlindner/)
  - [Eric "breaks more things than he fixes" Hibar](https://www.linkedin.com/in/erichibarjr/)
  - Sean Robinson
+ - [Hicham "the man with the plan" Bouali](https://www.linkedin.com/in/hicham-bouali-78923226/)
