@@ -70,12 +70,16 @@ Function Get-OneLoginUser {
 
 Function New-OneLoginUser {
 
-    [CmdletBinding(DefaultParameterSetName="username")]
+    [CmdletBinding()]
     param(
         [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName="email")]
         [Parameter(Mandatory = $false,ValueFromPipelineByPropertyName,ParameterSetName="username")]
         [string]
         $email,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName="email")]
+        [switch]
+        $EmailOnly,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName,ParameterSetName="username")]
         [Parameter(Mandatory = $false,ValueFromPipelineByPropertyName,ParameterSetName="email")]  
@@ -195,7 +199,7 @@ Function New-OneLoginUser {
     }
 
     # Remove non-body params
-    (@("Connection","mappings","validate_policy","id","user") + [System.Management.Automation.Cmdlet]::CommonParameters) | ForEach-Object {
+    (@("Connection","mappings","validate_policy","id","user","EmailOnly") + [System.Management.Automation.Cmdlet]::CommonParameters) | ForEach-Object {
         $PSBoundParameters.Remove($_) | out-null
     }
 
@@ -204,6 +208,7 @@ Function New-OneLoginUser {
     Return [OneLogin.User]($Response | Select-Object * -ExcludeProperty custom_attributes)
 
 }
+
 
 Function Remove-OneLoginUser {
     
